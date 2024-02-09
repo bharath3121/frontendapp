@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui-deployment
+  namespace: demo-app
+  labels:
+    app: ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ui
+  template:
+    metadata:
+      labels:
+        app: ui
+    spec:
+      containers:
+      - name: uiserver
+        image: 813188407714.dkr.ecr.ap-south-1.amazonaws.com/angular:1.0
+        ports:
+        - containerPort: 80
