@@ -1,34 +1,22 @@
-apiVersion: apps/v1 # Kubernetes API version
-kind: Deployment  # Kubernetes resource kind we are creating
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: angular-deployment
+  name: ui-deployment
+  namespace: demo-app
+  labels:
+    app: ui
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: angular
-  replicas: 5 # Number of replicas that will be created for this deployment
+      app: ui
   template:
     metadata:
       labels:
-        app: angular
+        app: ui
     spec:
       containers:
-      - name: angular
-        image: ng-docker-k8s:1.0 # Image that will be used to containers in the cluster
+      - name: uiserver
+        image: 813188407714.dkr.ecr.ap-south-1.amazonaws.com/angular:1.0
         ports:
-        - containerPort: 80 # The port that the container is running on in the cluster
----
-
-kind: Service  # Kubernetes API version
-apiVersion: v1 # Kubernetes resource kind we are creating
-metadata:
-  name: angular-service
-spec:
-  selector:
-    app: angular
-  ports:
-  - protocol: TCP
-    port: 80   # The port that the service is running on in the cluster
-    targetPort: 80   # The port exposed by the service
-    nodePort: 31000
-  type: NodePort     # type of the service.
+        - containerPort: 80
